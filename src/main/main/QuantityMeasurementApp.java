@@ -4,7 +4,9 @@ public class QuantityMeasurementApp {
 
     enum LengthUnit {
         FEET(1.0),
-        INCH(1.0 / 12.0);
+        INCH(1.0 / 12.0),
+        YARD(3.0),
+        CM(0.0328084);
 
         private final double toFeet;
 
@@ -17,7 +19,7 @@ public class QuantityMeasurementApp {
         }
     }
 
-    static class QuantityLength {
+    public static class QuantityLength {
         private final double value;
         private final LengthUnit unit;
 
@@ -34,7 +36,9 @@ public class QuantityMeasurementApp {
         public boolean equals(Object obj) {
             if (this == obj) return true;
             if (obj == null || getClass() != obj.getClass()) return false;
+
             QuantityLength other = (QuantityLength) obj;
+
             return Double.compare(this.toBaseUnit(), other.toBaseUnit()) == 0;
         }
 
@@ -45,9 +49,13 @@ public class QuantityMeasurementApp {
     }
 
     public static void main(String[] args) {
-        QuantityLength q1 = new QuantityLength(1.0, LengthUnit.FEET);
-        QuantityLength q2 = new QuantityLength(12.0, LengthUnit.INCH);
+        QuantityLength q1 = new QuantityLength(1.0, LengthUnit.YARD);
+        QuantityLength q2 = new QuantityLength(3.0, LengthUnit.FEET);
+
+        QuantityLength q3 = new QuantityLength(1.0, LengthUnit.CM);
+        QuantityLength q4 = new QuantityLength(0.393701, LengthUnit.INCH);
 
         System.out.println(q1.equals(q2));
+        System.out.println(q3.equals(q4));
     }
 }
