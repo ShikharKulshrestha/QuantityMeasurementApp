@@ -1,42 +1,44 @@
 package app;
 
 
-import length.QuantityLength;
-import length.LengthUnit;
+import com.quantity.measurement.common.Quantity;
+import com.quantity.measurement.length.LengthUnit;
+import com.quantity.measurement.weight.WeightUnit;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class QuantityMeasurementAppTest {
-
-    private static final double EPS = 1e-3;
+public class QuantityTest {
 
     @Test
-    void testFeetToInches() {
-        assertEquals(12.0,
-                QuantityMeasurementApp.QuantityLength.convert(1.0,
-                        LengthUnit.FEET,
-                        LengthUnit.INCH),
-                EPS);
+    void testLengthEquality() {
+        assertTrue(new Quantity<>(1.0, LengthUnit.FEET)
+                .equals(new Quantity<>(12.0, LengthUnit.INCH)));
     }
 
     @Test
-    void testEquality() {
-        assertTrue(new QuantityMeasurementApp.QuantityLength(1.0, LengthUnit.FEET)
-                .equals(new QuantityMeasurementApp.QuantityLength(12.0, LengthUnit.INCH)));
+    void testWeightEquality() {
+        assertTrue(new Quantity<>(1.0, WeightUnit.KILOGRAM)
+                .equals(new Quantity<>(1000.0, WeightUnit.GRAM)));
     }
 
     @Test
-    void testAdditionWithTarget() {
-        var result = new QuantityMeasurementApp.QuantityLength(1.0, LengthUnit.FEET)
-                .add(new QuantityMeasurementApp.QuantityLength(12.0, LengthUnit.INCH),
-                        LengthUnit.YARD);
-
-        assertEquals(0.667, result.toString().contains("0.667") ? 0.667 : 0.0, EPS);
+    void testCrossCategory() {
+        assertFalse(new Quantity<>(1.0, LengthUnit.FEET)
+                .equals(new Quantity<>(1.0, WeightUnit.KILOGRAM)));
     }
 
     @Test
-    void testNullUnit() {
-        assertThrows(IllegalArgumentException.class, () ->
-                new QuantityMeasurementApp.QuantityLength(1.0, null));
+    void testConversion() {
+        Quantity<LengthUnit> q = new Quantity<>(1.0, LengthUnit.FEET);
+        assertEquals("Quantity(12.0, INCH)", q.convertTo(LengthUnit.INCH).toString());
+    }
+
+    @Test
+    void testAddition() {
+        Quantity<LengthUnit> result =
+                new Quantity<>(1.0, LengthUnit.FEET)
+                        .add(new Quantity<>(12.0, LengthUnit.INCH), LengthUnit.FEET);
+
+        assertTrue(result.equals(new Quantity<>(2.0, LengthUnit.FEET)));
     }
 }
