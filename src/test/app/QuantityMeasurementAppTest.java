@@ -4,6 +4,8 @@ package app;
 import com.quantity.measurement.common.Quantity;
 import com.quantity.measurement.length.LengthUnit;
 import com.quantity.measurement.weight.WeightUnit;
+import com.quantity.measurement.volume.VolumeUnit;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,5 +42,26 @@ public class QuantityTest {
                         .add(new Quantity<>(12.0, LengthUnit.INCH), LengthUnit.FEET);
 
         assertTrue(result.equals(new Quantity<>(2.0, LengthUnit.FEET)));
+    }
+
+    @Test
+    void testVolumeEquality() {
+        assertTrue(new Quantity<>(1.0, VolumeUnit.LITRE)
+                .equals(new Quantity<>(1000.0, VolumeUnit.MILLILITRE)));
+    }
+
+    @Test
+    void testVolumeConversion() {
+        Quantity<VolumeUnit> q = new Quantity<>(1.0, VolumeUnit.LITRE);
+        assertEquals("Quantity(1000.0, MILLILITRE)", q.convertTo(VolumeUnit.MILLILITRE).toString());
+    }
+
+    @Test
+    void testVolumeAddition() {
+        Quantity<VolumeUnit> result =
+                new Quantity<>(1.0, VolumeUnit.LITRE)
+                        .add(new Quantity<>(1000.0, VolumeUnit.MILLILITRE), VolumeUnit.LITRE);
+
+        assertTrue(result.equals(new Quantity<>(2.0, VolumeUnit.LITRE)));
     }
 }

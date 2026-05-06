@@ -1,4 +1,4 @@
-package weight;
+package com.quantity.measurement.weight;
 
 import com.quantity.measurement.common.IMeasurable;
 

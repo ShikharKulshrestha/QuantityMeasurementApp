@@ -1,18 +1,16 @@
-package length;
-
+package volume;
 
 import com.quantity.measurement.common.IMeasurable;
 
-public enum LengthUnit implements IMeasurable {
+public enum VolumeUnit implements IMeasurable {
 
-    FEET(1.0),
-    INCH(1.0 / 12.0),
-    YARD(3.0),
-    CM(0.0328084);
+    LITRE(1.0),
+    MILLILITRE(0.001),
+    GALLON(3.78541);
 
     private final double factor;
 
-    LengthUnit(double factor) {
+    VolumeUnit(double factor) {
         this.factor = factor;
     }
 
