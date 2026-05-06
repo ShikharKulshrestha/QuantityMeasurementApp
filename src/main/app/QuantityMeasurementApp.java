@@ -5,6 +5,10 @@ import com.quantity.measurement.common.Quantity;
 import com.quantity.measurement.length.LengthUnit;
 import com.quantity.measurement.weight.WeightUnit;
 
+import com.quantity.measurement.common.Quantity;
+import com.quantity.measurement.length.LengthUnit;
+import com.quantity.measurement.weight.WeightUnit;
+
 public class QuantityMeasurementApp {
 
     public static void main(String[] args) {
